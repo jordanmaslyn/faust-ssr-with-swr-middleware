@@ -13,10 +13,11 @@ import {
   SEO,
   NavigationMenu,
 } from 'components';
-import { getNextStaticProps } from '@faustwp/core';
+import { getWordPressProps } from '@faustwp/core';
 import { pageTitle } from 'utilities';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 import appConfig from 'app.config';
+import { addCacheControlHeader } from 'utilities/ssr-swr';
 
 export default function Page() {
   const { data, loading, fetchMore } = useQuery(Page.query, {
@@ -106,8 +107,6 @@ Page.variables = () => {
   };
 };
 
-export async function getStaticProps(context) {
-  return getNextStaticProps(context, {
-    Page,
-  });
+export async function getServerSideProps(ctx) {
+  return getWordPressProps({ ctx: addCacheControlHeader(ctx) });
 }

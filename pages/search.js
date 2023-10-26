@@ -1,7 +1,7 @@
 import * as MENUS from 'constants/menus';
 
 import { gql, useQuery } from '@apollo/client';
-import { getNextStaticProps } from '@faustwp/core';
+import { getWordPressProps } from '@faustwp/core';
 import {
   Button,
   Header,
@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { GetSearchResults } from 'queries/GetSearchResults';
 import styles from 'styles/pages/_Search.module.scss';
 import appConfig from 'app.config';
+import { addCacheControlHeader } from 'utilities/ssr-swr';
 
 export default function Page() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -147,6 +148,6 @@ Page.query = gql`
   }
 `;
 
-export function getStaticProps(ctx) {
-  return getNextStaticProps(ctx, { Page });
+export function getServerSideProps(ctx) {
+  return getWordPressProps({ ctx: addCacheControlHeader(ctx) });
 }

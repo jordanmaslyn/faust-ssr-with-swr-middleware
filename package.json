@@ -1,5 +1,5 @@
 {
-  "name": "@faustjs/atlas-blueprint-portfolio",
+  "name": "faust-ssr-swr",
   "version": "0.2.0",
   "private": true,
   "scripts": {
